@@ -3,23 +3,24 @@
 open Props
 open FsCheck
 
-let getTestOutcome prop = 
-        try 
-            Check.QuickThrowOnFailure prop; "pass"
+let getTestOutcome prop score = 
+        try
+            Check.QuickThrowOnFailure prop;
+            "pass," + (string score)
         with
-             _ -> "fail"
+             _ -> "fail,"
         
 let testOutcomes = [
-    getTestOutcome propSumList; 
-    getTestOutcome propPairLists; 
-    getTestOutcome propWeightedMean;
-    getTestOutcome propMemberOf;
-    getTestOutcome propRemove;
-    getTestOutcome propFindMax;
-    getTestOutcome propSelSort;
-    getTestOutcome propCommon;
-    getTestOutcome propMerge;
-    getTestOutcome propMergeSort] 
+    getTestOutcome propSumList 4; 
+    getTestOutcome propPairLists 4; 
+    getTestOutcome propWeightedMean 7;
+    getTestOutcome propMemberOf 6;
+    getTestOutcome propRemove 6;
+    getTestOutcome propFindMax 13;
+    getTestOutcome propSelSort 20;
+    getTestOutcome propCommon 15;
+    getTestOutcome propMerge 5;
+    getTestOutcome propMergeSort 20] 
 
 let outcomesString = List.fold (fun a x -> a + x+ ",") "" testOutcomes
 let args = fsi.CommandLineArgs
