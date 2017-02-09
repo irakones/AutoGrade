@@ -1,8 +1,10 @@
 #!/bin/bash
 regex="([0-9]+-[0-9]+)[[:space:]]-[[:space:]](([a-zA-Z][[:space:]]?)+)*"
 
+touch "outcomes.csv"
 tempDir="$PWD/Submissions/tmp"
 mkdir -p $tempDir
+mkdir -p Completed_Submissions
 cp "$PWD/a1Checker.fsx" $tempDir
 
 for entry in "$PWD/Submissions"/*
@@ -25,8 +27,13 @@ do
         numGraded=$(wc -l < outcomes.csv)
         fsharpi a1Checker.fsx "$mycourses_id" "$name"
         newNumGraded=$(wc -l < outcomes.csv)
+        
+        #if test failed, write to csv. Otherwise, move file to
+        #graded_submissions
         if [[ "$newNumGraded" == "$numGraded" ]]; then
             echo "$mycourses_id,$name,TEST_FAIL" >> outcomes.csv
+        else
+            mv "$entry" Completed_Submissions
         fi
         rm "$tempDir/assignment1.fs"
     fi

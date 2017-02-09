@@ -1,6 +1,6 @@
 module Props
 open FsCheck
-#r "FsCheck/FsCheck.dll"
+#r "packages/FsCheck/lib/net45/FsCheck.dll"
 #load "hw1_sol.fs";;
 #load "Submissions/tmp/assignment1.fs";;
 
@@ -73,3 +73,17 @@ let propMerge (lists: SmallFloat list * SmallFloat list) =
 
 let propMergeSort (l: SmallFloat list) =
     hw1Sol.mergesort l = hw1.mergesort l 
+
+let propList: obj list = [
+    propSumList
+    propPairLists
+    propWeightedMean
+    propMemberOf
+    propRemove
+    propFindMax
+    propSelSort
+    propMerge
+    propMergeSort
+]
+
+let weights = [4; 4; 7; 6; 6; 13; 20; 15; 5; 20]
